@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aleksei Bulsoev — Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2eb;
+    --accent: #c8f03d;
+    --gray: #1a1a1a;
+    --muted: #555;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,240,61,0.4);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.1s ease;
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 28px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 100;
+    mix-blend-mode: normal;
+  }
+  nav::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.9), transparent);
+    pointer-events: none;
+  }
+  .nav-logo {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    text-decoration: none;
+    position: relative; z-index: 1;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links {
+    display: flex; gap: 40px;
+    list-style: none;
+    position: relative; z-index: 1;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 48px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 70% 50%, rgba(200,240,61,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: 
+      linear-gradient(rgba(200,240,61,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,240,61,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,240,61,0.1);
+    border: 1px solid rgba(200,240,61,0.2);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .hero-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(40px, 5.5vw, 80px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+  .hero-name .line2 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245,242,235,0.3);
+  }
+  .hero-name .accent { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #888;
+    max-width: 400px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent);
+    color: var(--black);
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover { background: #d4f54a; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(200,240,61,0.3); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(245,242,235,0.2);
+    color: var(--white);
+    padding: 14px 28px;
+    border-radius: 4px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; justify-content: center; align-items: center;
+  }
+
+  .hero-card {
+    width: 320px;
+    background: var(--gray);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+    animation: floatCard 4s ease-in-out infinite;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards, floatCard 4s ease-in-out 2s infinite;
+  }
+
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .card-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .card-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .stat {
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .stat-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  .card-tools {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .tool-tag {
+    background: rgba(200,240,61,0.08);
+    border: 1px solid rgba(200,240,61,0.15);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 120px 48px;
+    position: relative;
+  }
+
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 64px;
+  }
+
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .section-title .outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245,242,235,0.25);
+  }
+
+  .section-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: rgba(200,240,61,0.06);
+    line-height: 1;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    background: var(--gray);
+    padding: 40px 36px;
+    border: 1px solid rgba(255,255,255,0.04);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: none;
+  }
+  .service-card:hover {
+    background: #202020;
+    border-color: rgba(200,240,61,0.15);
+    transform: translateY(-4px);
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon {
+    font-size: 32px;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .service-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .service-desc {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .service-price {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .service-price span {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+    font-family: 'Manrope', sans-serif;
+  }
+
+  /* WORKS */
+  .works {
+    padding: 120px 48px;
+    background: linear-gradient(to bottom, var(--black), #0d0d0d);
+  }
+
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 64px;
+  }
+
+  .work-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.4s ease;
+    cursor: none;
+    background: var(--gray);
+  }
+  .work-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(200,240,61,0.2);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+  }
+
+  .work-preview {
+    aspect-ratio: 16/10;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .work-preview-inner {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+    transition: transform 0.4s ease;
+  }
+  .work-card:hover .work-preview-inner { transform: scale(1.08); }
+
+  .wp-1 { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+  .wp-2 { background: linear-gradient(135deg, #1a2e1a, #162116); }
+  .wp-3 { background: linear-gradient(135deg, #2e1a1a, #211616); }
+
+  .work-overlay {
+    position: absolute; inset: 0;
+    background: rgba(10,10,10,0.7);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .work-card:hover .work-overlay { opacity: 1; }
+  .work-overlay span {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 10px 20px;
+    border-radius: 4px;
+  }
+
+  .work-info { padding: 24px; }
+  .work-cat {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .work-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .work-desc { font-size: 13px; color: #555; line-height: 1.6; }
+
+  /* PROCESS */
+  .process {
+    padding: 120px 48px;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+  }
+
+  .step {
+    padding: 40px 32px;
+    background: var(--gray);
+    border: 1px solid rgba(255,255,255,0.04);
+    position: relative;
+  }
+
+  .step-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: rgba(200,240,61,0.1);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .step-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .step-desc { font-size: 13px; color: #555; line-height: 1.7; }
+
+  /* CONTACT */
+  .contact {
+    padding: 120px 48px;
+    background: var(--gray);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact::before {
+    content: '';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,240,61,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(36px, 6vw, 80px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    position: relative; z-index: 1;
+  }
+  .contact-title .outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245,242,235,0.15);
+  }
+
+  .contact-sub {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 48px;
+    position: relative; z-index: 1;
+  }
+
+  .contact-links {
+    display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 28px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+  }
+  .contact-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-3px);
+  }
+  .contact-link.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--black);
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .contact-link.primary:hover {
+    background: #d4f54a;
+    color: var(--black);
+    box-shadow: 0 12px 40px rgba(200,240,61,0.3);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-copy { font-size: 12px; color: #333; }
+  .footer-domain {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: all 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 120px 24px 60px; }
+    .hero-right { display: none; }
+    .services, .works, .process, .contact { padding: 80px 24px; }
+    .services-grid, .works-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .section-num { display: none; }
+    footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="nav-logo">AB<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#works">Работы</a></li>
+    <li><a href="#process">Процесс</a></li>
+    <li><a href="#contact">Контакт</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-left">
+    <div class="hero-tag">Доступен для проектов</div>
+    <h1 class="hero-name">
+      Aleksei<br>
+      <span class="line2">Bul</span><span class="accent">soev</span>
+    </h1>
+    <p class="hero-desc">
+      Создаю лендинги и сайты, которые продают. Быстро, чисто, без лишнего. На Tilda, WordPress или чистом коде.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Обсудить проект →</a>
+      <a href="#works" class="btn-outline">Смотреть работы</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="card-label">Статистика</div>
+      <div class="card-stats">
+        <div class="stat">
+          <div class="stat-num">20+</div>
+          <div class="stat-label">проектов сдано</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3</div>
+          <div class="stat-label">дня — лендинг</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">довольных клиентов</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">5★</div>
+          <div class="stat-label">средняя оценка</div>
+        </div>
+      </div>
+      <div class="card-tools">
+        <span class="tool-tag">Tilda</span>
+        <span class="tool-tag">WordPress</span>
+        <span class="tool-tag">HTML/CSS</span>
+        <span class="tool-tag">SEO</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">Что я делаю</div>
+      <h2 class="section-title">Услуги</h2>
+    </div>
+    <div class="section-num">01</div>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">⚡</span>
+      <h3 class="service-title">Лендинг-страница</h3>
+      <p class="service-desc">Одностраничный продающий сайт. Быстрая загрузка, конверсионная структура, мобильная адаптация.</p>
+      <div class="service-price">от 15 000 ₽ <span>/ 3-5 дней</span></div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🎨</span>
+      <h3 class="service-title">Сайт на Tilda</h3>
+      <p class="service-desc">Многостраничный сайт на Tilda с интеграциями, формами и CRM. Передаю с инструкцией по управлению.</p>
+      <div class="service-price">от 25 000 ₽ <span>/ 5-7 дней</span></div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🔧</span>
+      <h3 class="service-title">WordPress-сайт</h3>
+      <p class="service-desc">Корпоративный сайт или блог на WordPress. Простая CMS, легко редактировать самостоятельно.</p>
+      <div class="service-price">от 35 000 ₽ <span>/ 7-10 дней</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section class="works" id="works">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">Примеры</div>
+      <h2 class="section-title">Последние<br><span class="outline">проекты</span></h2>
+    </div>
+    <div class="section-num">02</div>
+  </div>
+
+  <div class="works-grid">
+    <div class="work-card reveal">
+      <div class="work-preview">
+        <div class="work-preview-inner wp-1">🏋️</div>
+        <div class="work-overlay"><span>Подробнее</span></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">Лендинг</div>
+        <div class="work-title">Фитнес-клуб</div>
+        <div class="work-desc">Продающий лендинг с онлайн-записью и акциями</div>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <div class="work-preview">
+        <div class="work-preview-inner wp-2">🌿</div>
+        <div class="work-overlay"><span>Подробнее</span></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">Tilda</div>
+        <div class="work-title">Эко-магазин</div>
+        <div class="work-desc">Каталог и карточки товаров на Tilda Commerce</div>
+      </div>
+    </div>
+    <div class="work-card reveal">
+      <div class="work-preview">
+        <div class="work-preview-inner wp-3">🏠</div>
+        <div class="work-overlay"><span>Подробнее</span></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">WordPress</div>
+        <div class="work-title">Агентство недвижимости</div>
+        <div class="work-desc">Корпоративный сайт с базой объектов</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-tag">Как работаю</div>
+      <h2 class="section-title">Процесс</h2>
+    </div>
+    <div class="section-num">03</div>
+  </div>
+
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h3 class="step-title">Бриф</h3>
+      <p class="step-desc">Обсуждаем задачу, целевую аудиторию, конкурентов и ожидания от сайта.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Прототип</h3>
+      <p class="step-desc">Разрабатываю структуру и базовый макет. Согласовываем до начала верстки.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <h3 class="step-title">Разработка</h3>
+      <p class="step-desc">Верстаю сайт, наполняю контентом, настраиваю формы и интеграции.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">04</div>
+      <h3 class="step-title">Запуск</h3>
+      <p class="step-desc">Размещаю на хостинге, настраиваю домен. Передаю сайт с инструкцией.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="reveal">
+    <h2 class="contact-title">
+      Есть<br>
+      <span class="outline">проект?</span>
+    </h2>
+    <p class="contact-sub">Напишите — отвечу в течение нескольких часов</p>
+    <div class="contact-links">
+      <a href="mailto:hello@bulsoev.com" class="contact-link primary">Написать на почту →</a>
+      <a href="https://t.me/bulsoev" class="contact-link">✈ Telegram</a>
+      <a href="https://bulsoev.com" class="contact-link">🌐 bulsoev.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2025 Aleksei Bulsoev. Все права защищены.</span>
+  <a href="https://bulsoev.com" class="footer-domain">bulsoev.com</a>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    }, 60);
+  });
+
+  document.querySelectorAll('a, button, .service-card, .work-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+      ring.style.transform = 'translate(-50%, -50%) scale(1.5)';
+      ring.style.borderColor = 'rgba(200,240,61,0.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.borderColor = 'rgba(200,240,61,0.4)';
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
