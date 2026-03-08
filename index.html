@@ -409,24 +409,24 @@
       </div>
     </a>
 
-    <!-- Ресторан — пока без ссылки -->
-    <div class="work-card reveal">
+    <!-- Кафе — кликабельная ссылка -->
+    <a href="https://alexbulsoev-techno.github.io/cafe-landing" target="_blank" class="work-card reveal">
       <div class="work-preview">
         <div class="work-preview-inner wp-2">🌿</div>
-        <div class="work-overlay"><span>Скоро</span></div>
+        <div class="work-overlay"><span>Смотреть сайт →</span></div>
       </div>
       <div class="work-info">
         <div class="work-cat">Лендинг</div>
-        <div class="work-title">Ресторан</div>
-        <div class="work-desc">Стильный лендинг для ресторана с меню и бронированием</div>
+        <div class="work-title">Кафе</div>
+        <div class="work-desc">Уютная кофейня с меню и бронированием стола</div>
       </div>
-    </div>
+    </a>
 
-    <!-- Недвижимость — пока без ссылки -->
-    <div class="work-card reveal">
+    <!-- Недвижимость — кликабельная ссылка -->
+    <a href="https://alexbulsoev-techno.github.io/realty-landing/" target="_blank" class="work-card reveal">
       <div class="work-preview">
         <div class="work-preview-inner wp-3">🏠</div>
-        <div class="work-overlay"><span>Скоро</span></div>
+        <div class="work-overlay"><span>Смотреть сайт →</span></div>
       </div>
       <div class="work-info">
         <div class="work-cat">Лендинг</div>
@@ -459,7 +459,7 @@
     <h2 class="contact-title">Есть<br><span class="outline">проект?</span></h2>
     <p class="contact-sub">Напишите — отвечу в течение нескольких часов</p>
     <div class="contact-links">
-      <a href="mailto:hello@bulsoev.com" class="contact-link primary">Написать на почту →</a>
+      <a href="/cdn-cgi/l/email-protection#7018151c1c1f3012051c031f15065e131f1d" class="contact-link primary">Написать на почту →</a>
       <a href="https://t.me/bulsoev" class="contact-link">✈ Telegram</a>
       <a href="https://bulsoev.com" class="contact-link">🌐 bulsoev.com</a>
     </div>
@@ -471,7 +471,7 @@
   <a href="https://bulsoev.com" class="footer-domain">bulsoev.com</a>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   document.addEventListener('mousemove', e => {
@@ -497,11 +497,4 @@
   const observer = new IntersectionObserver(entries => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-      }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+        setTimeout(() => entry.target.classList.add('visible'), i * 8
