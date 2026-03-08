@@ -22,7 +22,7 @@
     font-family: 'Manrope', sans-serif;
     font-weight: 300;
     overflow-x: hidden;
-    cursor: none;
+
   }
   .cursor {
     width: 12px; height: 12px;
@@ -235,7 +235,7 @@
     position: relative;
     overflow: hidden;
     transition: all 0.4s ease;
-    cursor: none;
+
   }
   .service-card:hover { background: #202020; border-color: rgba(200,240,61,0.15); transform: translateY(-4px); }
   .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
@@ -252,7 +252,7 @@
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.06);
     transition: all 0.4s ease;
-    cursor: none;
+
     background: var(--gray);
     text-decoration: none;
     color: inherit;
@@ -265,6 +265,8 @@
   .wp-1 { background: linear-gradient(135deg, #1a1a2e, #16213e); }
   .wp-2 { background: linear-gradient(135deg, #1a2e1a, #162116); }
   .wp-3 { background: linear-gradient(135deg, #2e1a1a, #211616); }
+  .wp-4 { background: linear-gradient(135deg, #1a1a2e, #0d0d1a); }
+  .wp-5 { background: linear-gradient(135deg, #1a2a1a, #0d1a0d); }
   .work-overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.7); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; }
   .work-card:hover .work-overlay { opacity: 1; }
   .work-overlay span { font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); padding: 10px 20px; border-radius: 4px; }
@@ -309,8 +311,8 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+
+
 
 <nav>
   <a href="#" class="nav-logo">AB<span>.</span></a>
@@ -435,6 +437,32 @@
       </div>
     </div>
 
+    <!-- Tilda — скоро -->
+    <div class="work-card reveal">
+      <div class="work-preview">
+        <div class="work-preview-inner wp-4" style="font-size:32px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.15); font-family:'Unbounded',sans-serif; letter-spacing:0.05em;">TILDA</div>
+        <div class="work-overlay"><span>Скоро</span></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">Tilda · В работе</div>
+        <div class="work-title">Сайт на Tilda</div>
+        <div class="work-desc">Многостраничный сайт с формами, CRM и адаптивным дизайном</div>
+      </div>
+    </div>
+
+    <!-- WordPress — скоро -->
+    <div class="work-card reveal">
+      <div class="work-preview">
+        <div class="work-preview-inner wp-5" style="font-size:28px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.15); font-family:'Unbounded',sans-serif; letter-spacing:0.05em;">WP</div>
+        <div class="work-overlay"><span>Скоро</span></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">WordPress · В работе</div>
+        <div class="work-title">WordPress-сайт</div>
+        <div class="work-desc">Корпоративный сайт с удобной CMS и блогом</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -455,13 +483,17 @@
 </section>
 
 <section class="contact" id="contact">
-  <div class="reveal">
-    <h2 class="contact-title">Есть<br><span class="outline">проект?</span></h2>
-    <p class="contact-sub">Напишите — отвечу в течение нескольких часов</p>
-    <div class="contact-links">
-      <a href="/cdn-cgi/l/email-protection#7018151c1c1f3012051c031f15065e131f1d" class="contact-link primary">Написать на почту →</a>
-      <a href="https://t.me/bulsoev" class="contact-link">✈ Telegram</a>
-      <a href="https://bulsoev.com" class="contact-link">🌐 bulsoev.com</a>
+  <div class="reveal" style="display:flex; flex-direction:column; align-items:center;">
+    <div style="width:100%; max-width:580px;">
+      <a href="mailto:alexbulsoev@gmail.com" style="text-decoration:none; color:inherit; display:block; border: 1px solid rgba(255,255,255,0.08); padding: 40px 60px; border-radius: 8px; transition: border-color 0.3s, box-shadow 0.3s; text-align:center;" onmouseover="this.style.borderColor='rgba(200,240,61,0.4)'; this.style.boxShadow='0 0 40px rgba(200,240,61,0.08)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.boxShadow='none'">
+        <h2 class="contact-title">Есть<br><span class="outline">проект?</span></h2>
+      </a>
+      <p class="contact-sub" style="margin-top:24px;">Напишите — отвечу в течение нескольких часов<br><span style="color:var(--accent); font-size:14px;">alexbulsoev@gmail.com</span></p>
+      <div class="contact-links" style="justify-content:stretch;">
+        <a href="https://t.me/ctelc100" target="_blank" class="contact-link primary" style="flex:1; justify-content:center;">Написать в Telegram →</a>
+        <a href="https://www.behance.net/alekseibulsoev" target="_blank" class="contact-link" style="flex:1; justify-content:center;">Behance</a>
+        <a href="mailto:admin@bulsoev.com" class="contact-link" style="flex:1; justify-content:center;">admin@bulsoev.com</a>
+      </div>
     </div>
   </div>
 </section>
@@ -471,30 +503,6 @@
   <a href="https://bulsoev.com" class="footer-domain">bulsoev.com</a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    setTimeout(() => {
-      ring.style.left = e.clientX + 'px';
-      ring.style.top = e.clientY + 'px';
-    }, 60);
-  });
-  document.querySelectorAll('a, button, .service-card, .work-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-      ring.style.transform = 'translate(-50%, -50%) scale(1.5)';
-      ring.style.borderColor = 'rgba(200,240,61,0.8)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-      ring.style.transform = 'translate(-50%, -50%) scale(1)';
-      ring.style.borderColor = 'rgba(200,240,61,0.4)';
-    });
-  });
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 8
+  c
