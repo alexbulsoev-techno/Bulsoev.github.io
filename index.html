@@ -14,7 +14,7 @@
     --gray: #1a1a1a;
     --muted: #555;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
   html { scroll-behavior: smooth; }
   body {
     background: var(--black);
@@ -26,25 +26,25 @@
   }
   .cursor {
     width: 12px; height: 12px;
-    background: var(--accent);
+    background: #c8f03d;
     border-radius: 50%;
     position: fixed;
+    top: 0; left: 0;
     pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.15s ease;
+    z-index: 99999;
     transform: translate(-50%, -50%);
   }
   .cursor-ring {
     width: 36px; height: 36px;
-    border: 1px solid rgba(200,240,61,0.4);
+    border: 1.5px solid rgba(200,240,61,0.6);
     border-radius: 50%;
     position: fixed;
+    top: 0; left: 0;
     pointer-events: none;
-    z-index: 9998;
+    z-index: 99998;
     transform: translate(-50%, -50%);
-    transition: all 0.1s ease;
   }
-  body:hover .cursor { opacity: 1; }
+
   body::before {
     content: '';
     position: fixed; inset: 0;
@@ -283,11 +283,15 @@
   .contact-title { font-family: 'Unbounded', sans-serif; font-size: clamp(36px, 6vw, 80px); font-weight: 900; line-height: 1.0; letter-spacing: -0.02em; margin-bottom: 24px; position: relative; z-index: 1; }
   .contact-title .outline { color: transparent; -webkit-text-stroke: 1px rgba(245,242,235,0.15); }
   .contact-sub { font-size: 16px; color: #666; margin-bottom: 48px; position: relative; z-index: 1; }
-  .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; position: relative; z-index: 1; }
-  .contact-link { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: var(--white); text-decoration: none; font-size: 14px; transition: all 0.3s; }
+  .contact-links { display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; z-index: 1; }
+  .contact-link { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 28px; width: 360px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: var(--white); text-decoration: none; font-size: 14px; transition: all 0.3s; }
   .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
-  .contact-link.primary { background: var(--accent); border-color: var(--accent); color: var(--black); font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-  .contact-link.primary:hover { background: #d4f54a; color: var(--black); box-shadow: 0 12px 40px rgba(200,240,61,0.3); }
+  .contact-link.primary { background: var(--accent); border-color: var(--accent); color: var(--black); font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 6px 0 #8aaa1a, 0 8px 16px rgba(200,240,61,0.3); }
+  .contact-link.primary:hover { background: #d4f54a; color: var(--black); transform: translateY(-3px); box-shadow: 0 9px 0 #8aaa1a, 0 12px 24px rgba(200,240,61,0.4); }
+  .contact-link.primary:active { transform: translateY(3px); box-shadow: 0 3px 0 #8aaa1a, 0 4px 8px rgba(200,240,61,0.2); }
+  .contact-link.secondary { background: transparent; border-color: rgba(245,242,235,0.2); color: var(--white); font-family: 'Unbounded', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 6px 0 rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.2); }
+  .contact-link.secondary:hover { border-color: var(--white); color: var(--white); transform: translateY(-3px); box-shadow: 0 9px 0 rgba(0,0,0,0.4), 0 12px 24px rgba(0,0,0,0.3); }
+  .contact-link.secondary:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,0.4); }
   footer { padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); }
   .footer-copy { font-size: 12px; color: #333; }
   .footer-domain { font-family: 'Unbounded', sans-serif; font-size: 12px; color: var(--accent); text-decoration: none; }
@@ -440,7 +444,7 @@
     </a>
 
     <!-- Репетитор по математике -->
-    <a href="https://bulsoev.com/math/" target="_blank" class="work-card reveal">
+    <a href="https://alexbulsoev-techno.github.io/math/" target="_blank" class="work-card reveal">
       <div class="work-preview">
         <div class="work-preview-inner wp-4">📐</div>
         <div class="work-overlay"><span>Смотреть сайт →</span></div>
@@ -453,7 +457,7 @@
     </a>
 
     <!-- Заглушка 5-й сайт -->
-    <div class="work-card reveal" style="opacity:0.45; cursor:default; pointer-events:none;">
+    <div class="work-card reveal" style="opacity:0.45; pointer-events:none;">
       <div class="work-preview">
         <div class="work-preview-inner wp-5">⏳</div>
       </div>
@@ -465,7 +469,7 @@
     </div>
 
     <!-- Заглушка Tilda -->
-    <div class="work-card reveal" style="opacity:0.45; cursor:default; pointer-events:none;">
+    <div class="work-card reveal" style="opacity:0.45; pointer-events:none;">
       <div class="work-preview">
         <div class="work-preview-inner wp-tilda">🎨</div>
       </div>
@@ -477,7 +481,7 @@
     </div>
 
     <!-- Заглушка WordPress -->
-    <div class="work-card reveal" style="opacity:0.45; cursor:default; pointer-events:none;">
+    <div class="work-card reveal" style="opacity:0.45; pointer-events:none;">
       <div class="work-preview">
         <div class="work-preview-inner wp-wordpress">🔧</div>
       </div>
@@ -512,9 +516,8 @@
     <h2 class="contact-title">Есть<br><span class="outline">проект?</span></h2>
     <p class="contact-sub">Напишите — отвечу в течение нескольких часов</p>
     <div class="contact-links">
-      <a href="mailto:alexbulsoev@gmail.com" class="contact-link primary">Написать на почту →</a>
-      <a href="https://t.me/bulsoev" class="contact-link">✈ Telegram</a>
-      <a href="https://bulsoev.com" class="contact-link">🌐 bulsoev.com</a>
+      <a href="mailto:alexbulsoev@gmail.com" class="contact-link primary">Написать на почту</a>
+      <a href="https://t.me/ctelc100" class="contact-link secondary">Написать в Telegram</a>
     </div>
   </div>
 </section>
@@ -524,17 +527,20 @@
   <a href="https://bulsoev.com" class="footer-domain">bulsoev.com</a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    setTimeout(() => {
-      ring.style.left = e.clientX + 'px';
-      ring.style.top = e.clientY + 'px';
-    }, 60);
-  });
+  let rx = 0, ry = 0, mx = 0, my = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+  (function loop() { rx += (mx-rx)*0.1; ry += (my-ry)*0.1; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(loop); })();
+</script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let rx = 0, ry = 0, mx = 0, my = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+  (function loop() { rx += (mx-rx)*0.1; ry += (my-ry)*0.1; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(loop); })();
   document.querySelectorAll('a, button, .service-card, .work-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.style.transform = 'translate(-50%, -50%) scale(2)';
