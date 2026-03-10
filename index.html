@@ -297,6 +297,7 @@
   .footer-domain { font-family: 'Unbounded', sans-serif; font-size: 12px; color: var(--accent); text-decoration: none; }
   .wp-4 { background: linear-gradient(135deg, #0a1f5c, #2e5fe8); color: white; }
   .wp-5 { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); color: #333; font-size: 2rem; }
+  .wp-photo { background: linear-gradient(135deg, #1a1a0a, #2a2010); color: #c8a96e; font-size: 2rem; }
   .wp-tilda { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); color: #333; font-size: 2rem; }
   .wp-wordpress { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); color: #333; font-size: 2rem; }
   .reveal { opacity: 1; transform: none; }
@@ -456,6 +457,19 @@
       </div>
     </a>
 
+    <!-- Фотограф Филимонов -->
+    <a href="https://alexbulsoev-techno.github.io/photo/" target="_blank" class="work-card reveal">
+      <div class="work-preview">
+        <div class="work-preview-inner wp-photo">📷</div>
+        <div class="work-overlay"><span>Смотреть сайт →</span></div>
+      </div>
+      <div class="work-info">
+        <div class="work-cat">Портфолио</div>
+        <div class="work-title">Фотограф. Камчатка</div>
+        <div class="work-desc">Сайт-портфолио фотографа Дмитрия Филимонова</div>
+      </div>
+    </a>
+
     <!-- Заглушка 5-й сайт -->
     <div class="work-card reveal" style="opacity:0.45; pointer-events:none;">
       <div class="work-preview">
@@ -516,7 +530,7 @@
     <h2 class="contact-title">Есть<br><span class="outline">проект?</span></h2>
     <p class="contact-sub">Напишите — отвечу в течение нескольких часов</p>
     <div class="contact-links">
-      <a href="mailto:alexbulsoev@gmail.com" class="contact-link primary">Написать на почту</a>
+      <a href="/cdn-cgi/l/email-protection#82e3eee7fae0f7eef1ede7f4c2e5efe3ebeeace1edef" class="contact-link primary">Написать на почту</a>
       <a href="https://t.me/ctelc100" class="contact-link secondary">Написать в Telegram</a>
     </div>
   </div>
@@ -527,7 +541,7 @@
   <a href="https://bulsoev.com" class="footer-domain">bulsoev.com</a>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let rx = 0, ry = 0, mx = 0, my = 0;
@@ -553,7 +567,4 @@
       ring.style.borderColor = 'rgba(200,240,61,0.4)';
     });
   });
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 8
+  const observer = new IntersectionObserver(
